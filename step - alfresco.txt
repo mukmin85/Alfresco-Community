@@ -1,0 +1,482 @@
+Requirement
+
+Hostname : share
+OS : Ubuntu 20.04
+HDD : 50 GB - OS
+HDD1 : 100 GB - Data (alfresco)
+CPU : 8 Core
+RAM : 16 GB
+Environment : Docker
+
+root@share:~# df -h
+Filesystem                         Size  Used Avail Use% Mounted on
+/dev/sdb                            98G   61M   93G   1% /share
+
+root@share:~# 
+
+root@share:~# apt install nmap net-tools network-manager tree python
+
+root@share:~# nmcli dev show ens33
+GENERAL.DEVICE:                         ens33
+GENERAL.TYPE:                           ethernet
+GENERAL.HWADDR:                         00:0C:29:EF:DA:89
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          10 (unmanaged)
+GENERAL.CONNECTION:                     --
+GENERAL.CON-PATH:                       --
+WIRED-PROPERTIES.CARRIER:               on
+IP4.ADDRESS[1]:                         192.168.44.100/24
+IP4.GATEWAY:                            192.168.44.2
+IP4.ROUTE[1]:                           dst = 192.168.44.0/24, nh = 0.0.0.0, mt = 0
+IP4.ROUTE[2]:                           dst = 0.0.0.0/0, nh = 192.168.44.2, mt = 0
+IP6.GATEWAY:                            --
+root@share:~# 
+
+root@share:~# ip -o -f inet addr show | awk '/scope global/ {print $2,$4,$6}'
+ens33 192.168.44.100/24 192.168.44.255
+root@share:~# 
+
+
+root@share:~# vim /etc/netplan/00-installer-config.yaml
+# This is the network config written by 'subiquity'
+network:
+  version: 2
+  ethernets:
+    ens33:
+      addresses: [192.168.44.100/24]
+      gateway4: 192.168.44.2
+      nameservers: 
+        addresses: [1.1.1.1,8.8.8.8]
+
+root@share:~# netplan try
+
+root@share:~# netplan apply
+
+root@share:~# cat /etc/hosts
+127.0.0.1 share.com.my share
+127.0.1.1 share.com.my share
+192.168.44.100 share.com.my share
+
+root@share:~# hostnamectl set-hostname share.com.my --static
+
+root@share:~# hostnamectl set-hostname share.com.my --transient
+
+root@share:~# hostnamectl status
+   Static hostname: share.com.my
+         Icon name: computer-vm
+           Chassis: vm
+        Machine ID: 99e2a0fc97e84676b50fa840d512ec61
+           Boot ID: d9b675d4fcaa4b8fbffdbf117e347ff9
+    Virtualization: vmware
+  Operating System: Ubuntu 20.04.3 LTS
+            Kernel: Linux 5.4.0-99-generic
+      Architecture: x86-64
+root@share:~# 
+
+root@share:~# hostnamectl status --static
+share.com.my
+root@share:~# hostnamectl status --transient
+share.com.my
+root@share:~# 
+
+root@share:~#  cat /etc/sysctl.conf | tail -3
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+
+root@share:~# sysctl -p
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1 
+
+root@share:~# vim /etc/default/grub
+GRUB_DEFAULT=0
+GRUB_TIMEOUT_STYLE=hidden
+GRUB_TIMEOUT=0
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash ipv6.disable=1"
+#GRUB_CMDLINE_LINUX_DEFAULT=""
+GRUB_CMDLINE_LINUX="ipv6.disable=1"
+#GRUB_CMDLINE_LINUX=""
+
+root@share:~# update-grub
+
+root@share:~# timedatectl set-timezone Asia/Kuala_Lumpur
+root@share:~# timedatectl 
+               Local time: Mon 2022-02-07 18:26:27 +08   
+           Universal time: Mon 2022-02-07 10:26:27 UTC   
+                 RTC time: Mon 2022-02-07 10:26:27       
+                Time zone: Asia/Kuala_Lumpur (+08, +0800)
+System clock synchronized: yes                           
+              NTP service: active                        
+          RTC in local TZ: no                            
+admins@alfresco:~$ date
+Mon 07 Feb 2022 06:26:34 PM +08
+admins@alfresco:~$ 
+
+
+root@share:~# apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+root@share:~# curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+OK
+
+root@share:~# add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+root@share:~# apt install docker-ce docker-ce-cli containerd.io
+
+root@share:~# curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+root@share:~# chmod +x /usr/local/bin/docker-compose
+
+root@share:~# ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+root@share:~# usermod -a -G docker admins
+
+root@share:~# id admins
+uid=1000(admins) gid=1000(admins) groups=1000(admins),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lxd),998(docker)
+root@share:~# 
+
+root@share:~# apt install nodejs npm
+
+root@share:~# npm install n -g
+
+root@share:~# n stable
+
+If "node --version" shows the old version then start a new shell, or reset the location hash with:
+hash -r  (for bash, zsh, ash, dash, and ksh)
+rehash   (for csh and tcsh)
+admins@alfresco:~$ hash -r
+
+root@share:~# npm install -g yo
+
+root@share:~# npm install --global generator-alfresco-docker-installer
+
+root@share:~# cd /share/
+
+root@share:/share# mkdir -p data/alf-repo-data;
+root@share:/share# mkdir -p logs/alfresco;
+root@share:/share# mkdir -p data/ocr/input;
+root@share:/share# mkdir -p data/ocr/output;
+root@share:/share# mkdir -p keystores/alfresco;
+root@share:/share# mkdir -p data/solr-data;
+root@share:/share# mkdir -p data/postgres-data;
+root@share:/share# mkdir -p logs/postgres;
+root@share:/share# mkdir -p keystores/solr;
+root@share:/share# mkdir -p logs/share;
+
+root@share:~# chown admins:admins -R /share/
+
+admins@share:~$ cd /share/
+
+admins@share:/share$ yo alfresco-docker-installer
+
+             ,****.
+        ,.**. `*****  <-_
+       ******** ***** ####
+      $********::**** ####;
+      _.-._`***::*** ######
+    ,*******, *::* .;##### @
+    **********,' -=#####',@@@
+    ***' .,---, ,.-==@@@@@@@@
+     * /@@@@@',@ @\ '@@@@@@@
+      '@@@@/ @@@ @@@\ ':#'
+      !@@@@ @@@@ @@@@@@@@@^
+       @@@@ @@@@@ @@@@@@@'
+        `"$ '@@@@@. '##'
+             '@@@@;'
+
+     DOCKER COMPOSE ALFRESCO
+
+? Which ACS version do you want to use? 6.2
+? How may GB RAM are available for Alfresco (16 is minimum required)? 16
+? Do you want to use HTTPs for Web Proxy? Yes
+? What is the name of your server? share.com.my
+? Choose the password for your admin user admin
+? What HTTPs port do you want to use (all the services are using the same port)? 443
+? Do you want to use FTP (port 2121)? No
+? Do you want to use MariaDB instead of PostgreSQL? No
+? Are you using different languages (this is the most common scenario)? Yes
+? Do you want to create an internal SMTP server? No
+? Do you want to create an internal LDAP server? No
+? Select the addons to be installed: Google Docs 3.1.0, JavaScript Console 0.7, Order of the Bee Support Tools 1.0.0.0, Share Site Creators 0.0.8, Simple OCR 2.3.1 (for Alfresco 6.x), Alfresco OCR Transformer 1.0.0 (for Alfresco 7+), ESign C
+ert 1.8.2
+? Are you using a Windows host to run Docker? No
+? Do you want to use a start script? No
+
+   ---------------------------------------------------
+   WARNING: You selected the addon share-site-creators. 
+   Remember to add any user to group GROUP_SITE_CREATORS 
+   ---------------------------------------------------
+
+
+   ---------------------------------------------------------------
+   WARNING: You selected HTTPs for the NGINX Web Proxy. 
+   Default certificates localhost.cer and localhost.key have been 
+   provided in config/cert folder. 
+   You may replace these certificates by your own. 
+   ---------------------------------------------------------------
+
+   create .env
+   create docker-compose.yml
+   create alfresco/Dockerfile
+   create alfresco/modules/amps/empty
+   create alfresco/modules/jars/empty
+   create share/Dockerfile
+   create share/web-extension/share-config-custom-dev.xml
+   create share/modules/amps/empty
+   create share/modules/jars/empty
+   create search/Dockerfile
+   create config/nginx.conf
+   create config/nginx.htpasswd
+   create config/cert/localhost.cer
+   create config/cert/localhost.key
+   create alfresco/modules/amps/javascript-console-repo-0.7-SNAPSHOT.amp
+   create share/modules/amps/javascript-console-share-0.7-SNAPSHOT.amp
+   create alfresco/modules/amps/support-tools-repo-1.1.0.0-amp.amp
+   create share/modules/amps/support-tools-share-1.1.0.0-amp.amp
+   create alfresco/modules/amps/share-site-creators-repo-0.0.8-SNAPSHOT.amp
+   create share/modules/amps/share-site-creators-share-0.0.8-SNAPSHOT.amp
+   create alfresco/modules/jars/simple-ocr-repo-2.3.1.jar
+   create share/modules/jars/simple-ocr-share-2.3.1.jar
+   create ocrmypdf/Dockerfile
+   create ocrmypdf/assets/ocr.sh
+   create ocrmypdf/assets/ssh/id_rsa.pub
+   create alfresco/bin/ocrmypdf.sh
+   create alfresco/ssh/id_rsa
+   create alfresco/ssh/id_rsa.pub
+   create alfresco/modules/jars/embed-metadata-action-1.0.0.jar
+   create alfresco/modules/amps/esign-cert-repo-1.8.2.amp
+   create share/modules/amps/esign-cert-share-1.8.2.amp
+
+No change to package.json was detected. No package manager install will be executed.
+admins@share:/share$ 
+
+root@share:~# tree -f -pug /share/
+/share
+├── [drwxrwxr-x admins   admins  ]  /share/alfresco
+│   ├── [drwxrwxr-x admins   admins  ]  /share/alfresco/bin
+│   │   └── [-rw-r--r-- admins   admins  ]  /share/alfresco/bin/ocrmypdf.sh
+│   ├── [-rwxr-xr-x admins   admins  ]  /share/alfresco/Dockerfile
+│   ├── [drwxrwxr-x admins   admins  ]  /share/alfresco/modules
+│   │   ├── [drwxrwxr-x admins   admins  ]  /share/alfresco/modules/amps
+│   │   │   ├── [-rw-r--r-- admins   admins  ]  /share/alfresco/modules/amps/empty
+│   │   │   ├── [-rw-r--r-- admins   admins  ]  /share/alfresco/modules/amps/esign-cert-repo-1.8.2.amp
+│   │   │   ├── [-rw-r--r-- admins   admins  ]  /share/alfresco/modules/amps/javascript-console-repo-0.7-SNAPSHOT.amp
+│   │   │   ├── [-rw-r--r-- admins   admins  ]  /share/alfresco/modules/amps/share-site-creators-repo-0.0.8-SNAPSHOT.amp
+│   │   │   └── [-rw-r--r-- admins   admins  ]  /share/alfresco/modules/amps/support-tools-repo-1.1.0.0-amp.amp
+│   │   └── [drwxrwxr-x admins   admins  ]  /share/alfresco/modules/jars
+│   │       ├── [-rw-r--r-- admins   admins  ]  /share/alfresco/modules/jars/embed-metadata-action-1.0.0.jar
+│   │       ├── [-rw-r--r-- admins   admins  ]  /share/alfresco/modules/jars/empty
+│   │       └── [-rw-r--r-- admins   admins  ]  /share/alfresco/modules/jars/simple-ocr-repo-2.3.1.jar
+│   └── [drwxrwxr-x admins   admins  ]  /share/alfresco/ssh
+│       ├── [-rw-r--r-- admins   admins  ]  /share/alfresco/ssh/id_rsa
+│       └── [-rw-r--r-- admins   admins  ]  /share/alfresco/ssh/id_rsa.pub
+├── [drwxrwxr-x admins   admins  ]  /share/config
+│   ├── [drwxrwxr-x admins   admins  ]  /share/config/cert
+│   │   ├── [-rw-r--r-- admins   admins  ]  /share/config/cert/localhost.cer
+│   │   └── [-rw-r--r-- admins   admins  ]  /share/config/cert/localhost.key
+│   ├── [-rw-r--r-- admins   admins  ]  /share/config/nginx.conf
+│   └── [-rw-r--r-- admins   admins  ]  /share/config/nginx.htpasswd
+├── [drwxr-xr-x admins   admins  ]  /share/data
+│   ├── [drwxr-xr-x admins   admins  ]  /share/data/alf-repo-data
+│   ├── [drwxr-xr-x admins   admins  ]  /share/data/ocr
+│   │   ├── [drwxr-xr-x admins   admins  ]  /share/data/ocr/input
+│   │   └── [drwxr-xr-x admins   admins  ]  /share/data/ocr/output
+│   ├── [drwxr-xr-x admins   admins  ]  /share/data/postgres-data
+│   └── [drwxr-xr-x admins   admins  ]  /share/data/solr-data
+├── [-rwxr-xr-x admins   admins  ]  /share/docker-compose.yml
+├── [drwxr-xr-x admins   admins  ]  /share/keystores
+│   ├── [drwxr-xr-x admins   admins  ]  /share/keystores/alfresco
+│   └── [drwxr-xr-x admins   admins  ]  /share/keystores/solr
+├── [drwxr-xr-x admins   admins  ]  /share/logs
+│   ├── [drwxr-xr-x admins   admins  ]  /share/logs/alfresco
+│   ├── [drwxr-xr-x admins   admins  ]  /share/logs/postgres
+│   └── [drwxr-xr-x admins   admins  ]  /share/logs/share
+├── [drwxrwxr-x admins   admins  ]  /share/ocrmypdf
+│   ├── [drwxrwxr-x admins   admins  ]  /share/ocrmypdf/assets
+│   │   ├── [-rw-r--r-- admins   admins  ]  /share/ocrmypdf/assets/ocr.sh
+│   │   └── [drwxrwxr-x admins   admins  ]  /share/ocrmypdf/assets/ssh
+│   │       └── [-rw-r--r-- admins   admins  ]  /share/ocrmypdf/assets/ssh/id_rsa.pub
+│   └── [-rw-r--r-- admins   admins  ]  /share/ocrmypdf/Dockerfile
+├── [drwxrwxr-x admins   admins  ]  /share/search
+│   └── [-rwxr-xr-x admins   admins  ]  /share/search/Dockerfile
+└── [drwxrwxr-x admins   admins  ]  /share/share
+    ├── [-rwxr-xr-x admins   admins  ]  /share/share/Dockerfile
+    ├── [drwxrwxr-x admins   admins  ]  /share/share/modules
+    │   ├── [drwxrwxr-x admins   admins  ]  /share/share/modules/amps
+    │   │   ├── [-rw-r--r-- admins   admins  ]  /share/share/modules/amps/empty
+    │   │   ├── [-rw-r--r-- admins   admins  ]  /share/share/modules/amps/esign-cert-share-1.8.2.amp
+    │   │   ├── [-rw-r--r-- admins   admins  ]  /share/share/modules/amps/javascript-console-share-0.7-SNAPSHOT.amp
+    │   │   ├── [-rw-r--r-- admins   admins  ]  /share/share/modules/amps/share-site-creators-share-0.0.8-SNAPSHOT.amp
+    │   │   └── [-rw-r--r-- admins   admins  ]  /share/share/modules/amps/support-tools-share-1.1.0.0-amp.amp
+    │   └── [drwxrwxr-x admins   admins  ]  /share/share/modules/jars
+    │       ├── [-rw-r--r-- admins   admins  ]  /share/share/modules/jars/empty
+    │       └── [-rw-r--r-- admins   admins  ]  /share/share/modules/jars/simple-ocr-share-2.3.1.jar
+    └── [drwxrwxr-x admins   admins  ]  /share/share/web-extension
+        └── [-rw-r--r-- admins   admins  ]  /share/share/web-extension/share-config-custom-dev.xml
+
+31 directories, 30 files
+root@share:~# 
+
+root@share:~# cat /share/.env 
+# Docker Image versions
+ALFRESCO_CE_TAG=6.2.0-ga
+SEARCH_CE_TAG=2.0.1
+SHARE_TAG=6.2.0
+ACA_TAG=master
+POSTGRES_TAG=11.4
+MARIADB_TAG=10.5
+API_EXPLORER_TAG=6.2.0
+TRANSFORM_ENGINE_TAG=2.1.0
+ACTIVEMQ_TAG=5.15.8
+
+# Server properties
+SERVER_NAME=share.com.my
+root@share:~# 
+
+root@share:/share# chown -R 33007 data/solr-data;
+root@share:/share# chown -R 999 data/postgres-data;
+root@share:/share# chown -R 999 logs/postgres;
+root@share:/share# chown -R 33000 data/alf-repo-data;
+root@share:/share# chown -R 33000 logs/alfresco;
+
+root@share:~# docker pull alfresco/alfresco-content-repository-community:6.2.0-ga
+root@share:~# docker pull alfresco/alfresco-search-services:2.0.1
+root@share:~# docker pull alfresco/alfresco-share:6.2.0
+root@share:~# docker pull alfresco/alfresco-content-app:master
+root@share:~# docker pull alfresco/alfresco-transform-misc:2.1.0
+root@share:~# docker pull alfresco/alfresco-libreoffice:2.1.0
+root@share:~# docker pull alfresco/alfresco-imagemagick:2.1.0
+root@share:~# docker pull alfresco/alfresco-pdf-renderer:2.1.0
+root@share:~# docker pull alfresco/alfresco-tika:2.1.0
+root@share:~# docker pull alfresco/alfresco-share:6.2.0
+root@share:~# docker pull alfresco/alfresco-activemq:5.15.8
+root@share:~# docker pull postgres:11.4
+root@share:~# docker pull nginx:stable-alpine
+root@share:~# docker pull jbarlow83/ocrmypdf:latest
+
+root@share:~# cd /share/
+
+root@share:/share# docker-compose up --build --force-recreate -d
+Creating share_tika_1                  ... done
+Creating share_solr6_1                 ... done
+Creating share_activemq_1              ... done
+Creating share_postgres_1              ... done
+Creating share_alfresco-pdf-renderer_1 ... done
+Creating share_share_1                 ... done
+Creating share_transform-misc_1        ... done
+Creating share_libreoffice_1           ... done
+Creating share_ocrmypdf_1              ... done
+Creating share_imagemagick_1           ... done
+Creating share_alfresco_1              ... done
+Creating share_content-app_1           ... done
+Creating share_proxy_1                 ... done
+
+root@share:~# docker container ls -a
+CONTAINER ID   IMAGE                                    COMMAND                  CREATED          STATUS          PORTS                                                                                                NAMES
+43ca907470d6   nginx:stable-alpine                      "/docker-entrypoint.…"   46 minutes ago   Up 46 minutes   80/tcp, 0.0.0.0:443->443/tcp                                                                         share_proxy_1
+7990ee7b6a7a   alfresco/alfresco-content-app:master     "/docker-entrypoint.…"   46 minutes ago   Up 46 minutes   8080/tcp                                                                                             share_content-app_1
+088a87251cf7   share_alfresco                           "catalina.sh run -se…"   46 minutes ago   Up 46 minutes   8080/tcp                                                                                             share_alfresco_1
+05e4768d385d   share_share                              "/usr/local/tomcat/s…"   46 minutes ago   Up 46 minutes   8000/tcp, 8080/tcp                                                                                   share_share_1
+06c3519bf5d8   share_solr6                              "/bin/sh -c '$DIST_D…"   46 minutes ago   Up 46 minutes   8983/tcp, 10001/tcp                                                                                  share_solr6_1
+d74168a52c63   alfresco/alfresco-activemq:5.15.8        "/bin/sh -c '${ACTIV…"   46 minutes ago   Up 46 minutes   0.0.0.0:5672->5672/tcp, 0.0.0.0:8161->8161/tcp, 0.0.0.0:61613->61613/tcp, 0.0.0.0:61616->61616/tcp   share_activemq_1
+96709dc67ff3   share_ocrmypdf                           "/usr/sbin/sshd -D"      46 minutes ago   Up 46 minutes   22/tcp                                                                                               share_ocrmypdf_1
+67d6754dad68   alfresco/alfresco-pdf-renderer:2.1.0     "/bin/sh -c 'java $J…"   46 minutes ago   Up 46 minutes   0.0.0.0:8090->8090/tcp                                                                               share_alfresco-pdf-renderer_1
+d3f19d8c1b09   postgres:11.4                            "docker-entrypoint.s…"   46 minutes ago   Up 46 minutes   0.0.0.0:5432->5432/tcp                                                                               share_postgres_1
+d33f17b42b6f   alfresco/alfresco-tika:2.1.0             "/bin/sh -c 'java $J…"   46 minutes ago   Up 46 minutes   0.0.0.0:8093->8090/tcp                                                                               share_tika_1
+d117ba0ba66f   alfresco/alfresco-transform-misc:2.1.0   "/bin/sh -c 'java $J…"   46 minutes ago   Up 46 minutes   0.0.0.0:8094->8090/tcp                                                                               share_transform-misc_1
+0ffc22a2388a   alfresco/alfresco-libreoffice:2.1.0      "/bin/sh -c 'java $J…"   46 minutes ago   Up 46 minutes   0.0.0.0:8092->8090/tcp                                                                               share_libreoffice_1
+f596111af531   alfresco/alfresco-imagemagick:2.1.0      "/bin/sh -c 'java $J…"   46 minutes ago   Up 46 minutes   0.0.0.0:8091->8090/tcp                                                                               share_imagemagick_1
+root@share:~# 
+
+root@share:~# docker container update --restart=always 43ca907470d6
+43ca907470d6
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/43ca907470d61323d8d85feed660ee5b1eef423743315893963c2e60e2c7402c/hostconfig.json 
+{"Binds":["/share/config/cert/localhost.key:/etc/nginx/localhost.key:rw","/share/config/nginx.conf:/etc/nginx/nginx.conf:rw","/share/config/nginx.htpasswd:/etc/nginx/conf.d/nginx.htpasswd:rw","/share/config/cert/localhost.cer:/etc/nginx/localhost.cer:rw"],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{"443/tcp":[{"HostIp":"","HostPort":"443"}]},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":134217728,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+
+root@share:~# docker container update --restart=always 7990ee7b6a7a
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/7990ee7b6a7a3c6f237966777c85edaf672b6987a775c4f769d3dd46336e4148/hostconfig.json 
+{"Binds":[],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":268435456,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+
+root@share:~# docker container update --restart=always 088a87251cf7
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/088a87251cf7f0bc13249d9a866b6cf56168a9457c110f0a709b30fb9b898707/hostconfig.json
+{"Binds":["/share/logs/alfresco:/usr/local/tomcat/logs:rw","/share/data/alf-repo-data:/usr/local/tomcat/alf_data:rw","/share/data/ocr/input:/ocr_input:rw","/share/data/ocr/output:/ocr_output:rw"],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":6777995264,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+
+root@share:~# docker container update --restart=always 05e4768d385d
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/05e4768d385dbee7992b26325c6784826ba676ece3a424f4027a94130902d782/hostconfig.json
+{"Binds":["/share/logs/share:/usr/local/tomcat/logs:rw"],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":1694498816,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+
+root@share:~# docker container update --restart=always 06c3519bf5d8
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/06c3519bf5d8d4ac156783875cd26266baede915f81c822f52efca99cb8a4315/hostconfig.json
+{"Binds":["/share/data/solr-data:/opt/alfresco-search-services/data:rw"],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":3388997632,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+
+root@share:~# docker container update --restart=always d74168a52c63
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/d74168a52c63cca51194998d0c8cbe8bfca7b5d65d5b4c717b08bec2427678ba/hostconfig.json
+{"Binds":[],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{"5672/tcp":[{"HostIp":"","HostPort":"5672"}],"61613/tcp":[{"HostIp":"","HostPort":"61613"}],"61616/tcp":[{"HostIp":"","HostPort":"61616"}],"8161/tcp":[{"HostIp":"","HostPort":"8161"}]},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":1073741824,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+ 
+root@share:~# docker container update --restart=always 96709dc67ff3
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/96709dc67ff39fbb5bfee42161f100511461c20a9af2d3d8dbe9d5e817d8fd21/hostconfig.json
+{"Binds":["/share/data/ocr/input:/ocr_input:rw","/share/data/ocr/output:/ocr_output:rw"],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":536870912,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+
+root@share:~# docker container update --restart=always 67d6754dad68
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/67d6754dad6884b3d621540023ab2483a2d86cf4acd793d4ec059b7d37b555c2/hostconfig.json
+{"Binds":[],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{"8090/tcp":[{"HostIp":"","HostPort":"8090"}]},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":536870912,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+
+root@share:~# docker container update --restart=always d3f19d8c1b09
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/d3f19d8c1b09efd0bbe0508e785d894f72957d6a00f1ca580ca72aac5d548067/hostconfig.json
+{"Binds":["/share/logs/postgres:/var/log/postgresql:rw","/share/data/postgres-data:/var/lib/postgresql/data:rw"],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{"5432/tcp":[{"HostIp":"","HostPort":"5432"}]},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":1694498816,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+
+root@share:~# docker container update --restart=always d33f17b42b6f
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/d33f17b42b6f080e8b71ffe90ad17bf706ba959a136b41dc0042cdfddd426170/hostconfig.json
+{"Binds":[],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{"8090/tcp":[{"HostIp":"","HostPort":"8093"}]},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":536870912,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+
+root@share:~# docker container update --restart=always d117ba0ba66f
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/d117ba0ba66fb57bfa962cf178051b49752adf1fd4194dc86b0fed6bb01065b2/hostconfig.json
+{"Binds":[],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{"8090/tcp":[{"HostIp":"","HostPort":"8094"}]},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":536870912,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+
+root@share:~# docker container update --restart=always 0ffc22a2388a
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/0ffc22a2388a30b40c7753e0ebb576238784e88a5bdde64204b29c600818bca7/hostconfig.json 
+{"Binds":[],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{"8090/tcp":[{"HostIp":"","HostPort":"8092"}]},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":536870912,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+
+root@share:~# docker container update --restart=always f596111af531
+
+root@share:~# grep '"RestartPolicy":{"Name":"always","MaximumRetryCount":0}' /var/lib/docker/containers/f596111af531b06640c8fe67bea2ef68b16467211347d2acdfe7637cf5b247d2/hostconfig.json 
+{"Binds":[],"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"share_default","PortBindings":{"8090/tcp":[{"HostIp":"","HostPort":"8091"}]},"RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"CgroupnsMode":"host","Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"private","Cgroup":"","Links":[],"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":536870912,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DeviceRequests":null,"KernelMemory":0,"KernelMemoryTCP":0,"MemoryReservation":0,"MemorySwap":-1,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":null,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0,"MaskedPaths":["/proc/asound","/proc/acpi","/proc/kcore","/proc/keys","/proc/latency_stats","/proc/timer_list","/proc/timer_stats","/proc/sched_debug","/proc/scsi","/sys/firmware"],"ReadonlyPaths":["/proc/bus","/proc/fs","/proc/irq","/proc/sys","/proc/sysrq-trigger"]}
+root@share:~# 
+
+root@share:/share# docker-compose ps -a
+
+root@share:/share# docker-compose images
+
+root@share:~# docker ps -a
+root@share:~# docker image ls -a
+
+Username : admin
+Password : admin
+
+https://share.com.my/alfresco/
+https://share.com.my/
+https://share.com.my/share/page/
