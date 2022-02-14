@@ -1,0 +1,8 @@
+11-Feb-2022 14:04:24.106 INFO [localhost-startStop-1] org.apache.catalina.core.ApplicationContext.log No Spring WebApplicationInitializer types detected on classpath
+11-Feb-2022 14:04:24.319 INFO [localhost-startStop-1] org.apache.catalina.core.ApplicationContext.log Initializing Spring root WebApplicationContext
+11-Feb-2022 14:05:11.010 INFO [localhost-startStop-1] org.apache.catalina.core.ApplicationContext.log org.tuckey.web.filters.urlrewrite.UrlRewriteFilter INFO: loaded (conf ok)
+11-Feb-2022 14:05:11.107 INFO [localhost-startStop-1] org.apache.catalina.core.ApplicationContext.log Initializing Spring DispatcherServlet 'Spring Surf Dispatcher Servlet'
+11-Feb-2022 15:44:19.346 INFO [localhost-startStop-1] org.apache.catalina.core.ApplicationContext.log No Spring WebApplicationInitializer types detected on classpath
+11-Feb-2022 15:44:19.413 INFO [localhost-startStop-1] org.apache.catalina.core.ApplicationContext.log Initializing Spring root WebApplicationContext
+11-Feb-2022 15:44:28.302 INFO [localhost-startStop-1] org.apache.catalina.core.ApplicationContext.log org.tuckey.web.filters.urlrewrite.UrlRewriteFilter INFO: loaded (conf ok)
+11-Feb-2022 15:44:28.351 INFO [localhost-startStop-1] org.apache.catalina.core.ApplicationContext.log Initializing Spring DispatcherServlet 'Spring Surf Dispatcher Servlet'

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.alfresco.org/model/dictionary/1.0" name="ocr:ocrModel">
+    <description>OCR Model</description>
+    <author>keensoft</author>
+    <version>1.0</version>
+    <imports>
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+    </imports>
+    <namespaces>
+        <namespace uri="http://www.keensoft.es/model/content/ocr/1.0" prefix="ocr"/>
+    </namespaces>
+    <data-types/>
+    <constraints/>
+    <types/>
+    <aspects>
+        <aspect name="ocr:ocrd">
+            <title>OCRd</title>
+            <properties>
+                <property name="ocr:processedDate">
+                    <title>OCR process date</title>
+                    <type>d:datetime</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true"/>
+                </property>
+                <property name="ocr:versionApplied">
+                    <title>OCR applied version</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true"/>
+                </property>
+            </properties>
+            <associations/>
+            <overrides/>
+            <mandatory-aspects/>
+        </aspect>
+    </aspects>
+</model>

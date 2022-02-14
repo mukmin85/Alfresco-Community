@@ -1,0 +1,7 @@
+2022-02-14 09:39:02.459 UTC [24] LOG:  database system was interrupted; last known up at 2022-02-11 16:38:55 UTC
+2022-02-14 09:39:02.514 UTC [24] LOG:  database system was not properly shut down; automatic recovery in progress
+2022-02-14 09:39:02.517 UTC [24] LOG:  redo starts at 0/266DD98
+2022-02-14 09:39:02.523 UTC [24] LOG:  invalid record length at 0/2675408: wanted 24, got 0
+2022-02-14 09:39:02.523 UTC [24] LOG:  redo done at 0/26753D0
+2022-02-14 09:39:02.523 UTC [24] LOG:  last completed transaction was at log time 2022-02-11 16:43:00.015122+00
+2022-02-14 09:39:02.608 UTC [1] LOG:  database system is ready to accept connections

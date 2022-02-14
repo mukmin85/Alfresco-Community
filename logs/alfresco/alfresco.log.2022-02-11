@@ -1,0 +1,434 @@
+2022-02-11 01:15:24,321 ERROR [freemarker.runtime] [FeedNotifier1] Error executing FreeMarker template
+FreeMarker template error:
+The following has evaluated to null or missing:
+==> {activity.activitySummary.pag  [in template "workspace://SpacesStore/708c5b86-b93a-4330-9c06-4e64cc4c65bd" at line 53, column 130]
+
+Tip: If the failing expression is known to be legally null/missing, either specify a default value with myOptionalVar!myDefault, or use <#if myOptionalVar??>when-present<#else>when-missing</#if>. (These only cover the last step of the expression; to cover the whole expression, use parenthessis: (myOptionVar.foo)!myDefault, (myOptionVar.foo)??
+
+The failing instruction (FTL stack trace):
+----------
+==> ${activity.activitySummary.page?html!""}  [in template "workspace://SpacesStore/708c5b86-b93a-4330-9c06-4e64cc4c65bd" at line 53, column 128]
+    #assign itemLink = "\la href=\"\${sha...  [in template "workspace://SpacesStore/708c5b86-b93a-4330-9c06-4e64cc4c65bd" at line 53, column 49]
+----------
+
+Java stack trace (for programmers):
+----------
+freemarker.core.InvalidReferenceException: [... Exception message was already printed; see it above ...]
+	at freemarker.core.InvalidReferenceException.getInstance(InvalidReferenceException.java:98)
+	at freemarker.core.EvalUtil.coerceModelToString(EvalUtil.java:382)
+	at freemarker.core.Expression.evalAndCoerceToString(Expression.java:115)
+	at freemarker.core.StringBuiltins$StringBuiltIn._eval(StringBuiltins.java:87)
+	at freemarker.core.Expression.eval(Expression.java:111)
+	at freemarker.core.DefaultToExpression._eval(DefaultToExpression.java:116)
+	at freemarker.core.Expression.eval(Expression.java:111)
+	at freemarker.core.Expression.evalAndCoerceToString(Expression.java:115)
+	at freemarker.core.DollarVariable.accept(DollarVariable.java:76)
+	at freemarker.core.Environment.visit(Environment.java:265)
+	at freemarker.core.MixedContent.accept(MixedContent.java:93)
+	at freemarker.core.Environment.visit(Environment.java:265)
+	at freemarker.core.Environment.renderElementToString(Environment.java:1798)
+	at freemarker.core.StringLiteral.evalAndCoerceToString(StringLiteral.java:116)
+	at freemarker.core.StringLiteral._eval(StringLiteral.java:93)
+	at freemarker.core.Expression.eval(Expression.java:111)
+	at freemarker.core.Assignment.accept(Assignment.java:106)
+	at freemarker.core.Environment.visit(Environment.java:265)
+	at freemarker.core.MixedContent.accept(MixedContent.java:93)
+	at freemarker.core.Environment.visitByHiddingParent(Environment.java:286)
+	at freemarker.core.ConditionalBlock.accept(ConditionalBlock.java:86)
+	at freemarker.core.Environment.visitByHiddingParent(Environment.java:286)
+	at freemarker.core.IteratorBlock$Context.runLoop(IteratorBlock.java:193)
+	at freemarker.core.Environment.visitIteratorBlock(Environment.java:509)
+	at freemarker.core.IteratorBlock.accept(IteratorBlock.java:103)
+	at freemarker.core.Environment.visitByHiddingParent(Environment.java:286)
+	at freemarker.core.ConditionalBlock.accept(ConditionalBlock.java:86)
+	at freemarker.core.Environment.visit(Environment.java:265)
+	at freemarker.core.MixedContent.accept(MixedContent.java:93)
+	at freemarker.core.Environment.visit(Environment.java:265)
+	at freemarker.core.Environment.process(Environment.java:243)
+	at org.alfresco.repo.template.FreeMarkerProcessor.process(FreeMarkerProcessor.java:296)
+	at org.alfresco.repo.processor.TemplateServiceImpl.processTemplate(TemplateServiceImpl.java:223)
+	at org.alfresco.repo.processor.TemplateServiceImpl.processTemplate(TemplateServiceImpl.java:204)
+	at org.alfresco.repo.action.executer.MailActionExecuter$3.prepare(MailActionExecuter.java:973)
+	at org.alfresco.repo.action.executer.MailActionExecuter.prepareEmail(MailActionExecuter.java:1029)
+	at org.alfresco.repo.action.executer.MailActionExecuter.prepareEmails(MailActionExecuter.java:585)
+	at org.alfresco.repo.action.executer.MailActionExecuter.executeImpl(MailActionExecuter.java:490)
+	at org.alfresco.repo.action.executer.ActionExecuterAbstractBase.execute(ActionExecuterAbstractBase.java:273)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.alfresco.repo.management.subsystems.SubsystemProxyFactory$1.invoke(SubsystemProxyFactory.java:79)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:212)
+	at com.sun.proxy.$Proxy349.execute(Unknown Source)
+	at org.alfresco.repo.action.ActionServiceImpl.directActionExecution(ActionServiceImpl.java:856)
+	at org.alfresco.repo.action.ActionServiceImpl.executeActionImpl(ActionServiceImpl.java:757)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:581)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:567)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:865)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:198)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.alfresco.repo.security.permissions.impl.AlwaysProceedMethodInterceptor.invoke(AlwaysProceedMethodInterceptor.java:41)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.alfresco.repo.security.permissions.impl.ExceptionTranslatorMethodInterceptor.invoke(ExceptionTranslatorMethodInterceptor.java:53)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.alfresco.repo.audit.AuditMethodInterceptor.invoke(AuditMethodInterceptor.java:166)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:295)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:98)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:212)
+	at com.sun.proxy.$Proxy54.executeAction(Unknown Source)
+	at org.alfresco.repo.activities.feed.EmailUserNotifier.notifyUser(EmailUserNotifier.java:198)
+	at org.alfresco.repo.activities.feed.AbstractUserNotifier.notifyUser(AbstractUserNotifier.java:228)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.processInternal(FeedNotifierImpl.java:393)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.access$2(FeedNotifierImpl.java:388)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1$1.execute(FeedNotifierImpl.java:379)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1$1.execute(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:450)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1.doWork(FeedNotifierImpl.java:375)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1.doWork(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.tenant.TenantUtil.runAsWork(TenantUtil.java:126)
+	at org.alfresco.repo.tenant.TenantUtil.runAsTenant(TenantUtil.java:95)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.process(FeedNotifierImpl.java:370)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.process(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.batch.BatchProcessor$TxnCallback.execute(BatchProcessor.java:723)
+	at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:450)
+	at org.alfresco.repo.batch.BatchProcessor$TxnCallback.run(BatchProcessor.java:767)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-02-11 01:15:24,362 ERROR [freemarker.runtime] [FeedNotifier1] Error executing FreeMarker template
+FreeMarker template error:
+The following has evaluated to null or missing:
+==> {activity.activitySummary.pag  [in template "workspace://SpacesStore/708c5b86-b93a-4330-9c06-4e64cc4c65bd" at line 53, column 130]
+
+Tip: If the failing expression is known to be legally null/missing, either specify a default value with myOptionalVar!myDefault, or use <#if myOptionalVar??>when-present<#else>when-missing</#if>. (These only cover the last step of the expression; to cover the whole expression, use parenthessis: (myOptionVar.foo)!myDefault, (myOptionVar.foo)??
+
+The failing instruction (FTL stack trace):
+----------
+==> ${activity.activitySummary.page?html!""}  [in template "workspace://SpacesStore/708c5b86-b93a-4330-9c06-4e64cc4c65bd" at line 53, column 128]
+    #assign itemLink = "\la href=\"\${sha...  [in template "workspace://SpacesStore/708c5b86-b93a-4330-9c06-4e64cc4c65bd" at line 53, column 49]
+----------
+
+Java stack trace (for programmers):
+----------
+freemarker.core.InvalidReferenceException: [... Exception message was already printed; see it above ...]
+	at freemarker.core.InvalidReferenceException.getInstance(InvalidReferenceException.java:98)
+	at freemarker.core.EvalUtil.coerceModelToString(EvalUtil.java:382)
+	at freemarker.core.Expression.evalAndCoerceToString(Expression.java:115)
+	at freemarker.core.StringBuiltins$StringBuiltIn._eval(StringBuiltins.java:87)
+	at freemarker.core.Expression.eval(Expression.java:111)
+	at freemarker.core.DefaultToExpression._eval(DefaultToExpression.java:116)
+	at freemarker.core.Expression.eval(Expression.java:111)
+	at freemarker.core.Expression.evalAndCoerceToString(Expression.java:115)
+	at freemarker.core.DollarVariable.accept(DollarVariable.java:76)
+	at freemarker.core.Environment.visit(Environment.java:265)
+	at freemarker.core.MixedContent.accept(MixedContent.java:93)
+	at freemarker.core.Environment.visit(Environment.java:265)
+	at freemarker.core.Environment.renderElementToString(Environment.java:1798)
+	at freemarker.core.StringLiteral.evalAndCoerceToString(StringLiteral.java:116)
+	at freemarker.core.StringLiteral._eval(StringLiteral.java:93)
+	at freemarker.core.Expression.eval(Expression.java:111)
+	at freemarker.core.Assignment.accept(Assignment.java:106)
+	at freemarker.core.Environment.visit(Environment.java:265)
+	at freemarker.core.MixedContent.accept(MixedContent.java:93)
+	at freemarker.core.Environment.visitByHiddingParent(Environment.java:286)
+	at freemarker.core.ConditionalBlock.accept(ConditionalBlock.java:86)
+	at freemarker.core.Environment.visitByHiddingParent(Environment.java:286)
+	at freemarker.core.IteratorBlock$Context.runLoop(IteratorBlock.java:193)
+	at freemarker.core.Environment.visitIteratorBlock(Environment.java:509)
+	at freemarker.core.IteratorBlock.accept(IteratorBlock.java:103)
+	at freemarker.core.Environment.visitByHiddingParent(Environment.java:286)
+	at freemarker.core.ConditionalBlock.accept(ConditionalBlock.java:86)
+	at freemarker.core.Environment.visit(Environment.java:265)
+	at freemarker.core.MixedContent.accept(MixedContent.java:93)
+	at freemarker.core.Environment.visit(Environment.java:265)
+	at freemarker.core.Environment.process(Environment.java:243)
+	at org.alfresco.repo.template.FreeMarkerProcessor.process(FreeMarkerProcessor.java:296)
+	at org.alfresco.repo.processor.TemplateServiceImpl.processTemplate(TemplateServiceImpl.java:223)
+	at org.alfresco.repo.processor.TemplateServiceImpl.processTemplate(TemplateServiceImpl.java:204)
+	at org.alfresco.repo.action.executer.MailActionExecuter$3.prepare(MailActionExecuter.java:973)
+	at org.alfresco.repo.action.executer.MailActionExecuter.prepareEmail(MailActionExecuter.java:1029)
+	at org.alfresco.repo.action.executer.MailActionExecuter.prepareEmails(MailActionExecuter.java:585)
+	at org.alfresco.repo.action.executer.MailActionExecuter.executeImpl(MailActionExecuter.java:490)
+	at org.alfresco.repo.action.executer.ActionExecuterAbstractBase.execute(ActionExecuterAbstractBase.java:273)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.alfresco.repo.management.subsystems.SubsystemProxyFactory$1.invoke(SubsystemProxyFactory.java:79)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:212)
+	at com.sun.proxy.$Proxy349.execute(Unknown Source)
+	at org.alfresco.repo.action.ActionServiceImpl.directActionExecution(ActionServiceImpl.java:856)
+	at org.alfresco.repo.action.ActionServiceImpl.executeActionImpl(ActionServiceImpl.java:757)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:581)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:567)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:865)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:198)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.alfresco.repo.security.permissions.impl.AlwaysProceedMethodInterceptor.invoke(AlwaysProceedMethodInterceptor.java:41)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.alfresco.repo.security.permissions.impl.ExceptionTranslatorMethodInterceptor.invoke(ExceptionTranslatorMethodInterceptor.java:53)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.alfresco.repo.audit.AuditMethodInterceptor.invoke(AuditMethodInterceptor.java:166)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:295)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:98)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:212)
+	at com.sun.proxy.$Proxy54.executeAction(Unknown Source)
+	at org.alfresco.repo.activities.feed.EmailUserNotifier.notifyUser(EmailUserNotifier.java:198)
+	at org.alfresco.repo.activities.feed.AbstractUserNotifier.notifyUser(AbstractUserNotifier.java:228)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.processInternal(FeedNotifierImpl.java:393)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.access$2(FeedNotifierImpl.java:388)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1$1.execute(FeedNotifierImpl.java:379)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1$1.execute(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:450)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1.doWork(FeedNotifierImpl.java:375)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1.doWork(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.tenant.TenantUtil.runAsWork(TenantUtil.java:126)
+	at org.alfresco.repo.tenant.TenantUtil.runAsTenant(TenantUtil.java:95)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.process(FeedNotifierImpl.java:370)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.process(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.batch.BatchProcessor$TxnCallback.execute(BatchProcessor.java:723)
+	at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:450)
+	at org.alfresco.repo.batch.BatchProcessor$TxnCallback.run(BatchProcessor.java:767)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-02-11 04:04:01,181 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'googledocs' subsystem, ID: [googledocs, drive]
+2022-02-11 04:04:01,192 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'googledocs' subsystem, ID: [googledocs, drive]
+2022-02-11 04:04:01,199 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'Messaging' subsystem, ID: [Messaging, default]
+2022-02-11 14:06:06,896 WARN  [org.alfresco.heartbeat.datasender.HBDataSenderServiceBuilder] [localhost-startStop-1] Setting the Heartbeat sender cron with property 'heartbeat.sender.cronExpression' is no longer supported.
+2022-02-11 14:06:07,658 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V4.2-metadata-query-indexes
+2022-02-11 14:06:07,659 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V5.1-metadata-query-indexes
+2022-02-11 14:06:07,659 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V5.2-remove-jbpm-tables-from-db
+2022-02-11 14:06:08,785 INFO  [org.alfresco.repo.admin] [localhost-startStop-1] Using database URL 'jdbc:postgresql://postgres:5432/alfresco' with user 'alfresco'.
+2022-02-11 14:06:08,787 INFO  [org.alfresco.repo.admin] [localhost-startStop-1] Connected to database PostgreSQL version 11.4 (Debian 11.4-1.pgdg90+1)
+2022-02-11 14:06:29,827 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Authentication' subsystem, ID: [Authentication, managed, alfrescoNtlm1]
+2022-02-11 14:06:30,127 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Authentication' subsystem, ID: [Authentication, managed, alfrescoNtlm1] complete
+2022-02-11 14:06:36,668 INFO  [org.orderofthebee.addons.support.tools.repo.config.PropertyBackedBeanPersister] [localhost-startStop-1] OOTBee Support Tools - PropertyBackedBeanPersister enabled
+2022-02-11 14:06:39,988 INFO  [org.springframework.extensions.webscripts.TemplateProcessorRegistry] [localhost-startStop-1] Registered template processor Repository Template Processor for extension ftl
+2022-02-11 14:06:40,000 INFO  [org.springframework.extensions.webscripts.ScriptProcessorRegistry] [localhost-startStop-1] Registered script processor Repository Script Processor for extension js
+2022-02-11 14:06:49,379 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'ContentStore' subsystem, ID: [ContentStore, managed, unencrypted]
+2022-02-11 14:06:49,547 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'ContentStore' subsystem, ID: [ContentStore, managed, unencrypted] complete
+2022-02-11 14:06:49,652 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Connecting to database: jdbc:postgresql://postgres:5432/alfresco, UserName=alfresco, PostgreSQL JDBC Driver
+2022-02-11 14:06:49,654 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Schema managed by database dialect org.alfresco.repo.domain.dialect.PostgreSQLDialect.
+2022-02-11 14:06:49,911 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Applied patches detected: 224
+2022-02-11 14:06:50,072 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Checking and patching Alfresco tables took 159 ms
+2022-02-11 14:06:50,103 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Activiti tables need to be checked for patches
+2022-02-11 14:06:50,209 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Checking and patching Activiti tables took 106 ms
+2022-02-11 14:06:50,324 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Checking that all patches have been applied took 115 ms
+2022-02-11 14:06:50,325 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Updating the DB schema took 664 ms
+2022-02-11 14:06:50,328 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] No changes were made to the schema.
+2022-02-11 14:06:54,021 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'thirdparty' subsystem, ID: [thirdparty, default]
+2022-02-11 14:06:54,252 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'thirdparty' subsystem, ID: [thirdparty, default] complete
+2022-02-11 14:06:54,253 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'OOoJodconverter' subsystem, ID: [OOoJodconverter, default]
+2022-02-11 14:06:54,469 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'OOoJodconverter' subsystem, ID: [OOoJodconverter, default] complete
+2022-02-11 14:06:54,484 WARN  [org.alfresco.repo.admin.ConfigurationChecker] [localhost-startStop-1] The 'dir.root' property is set to a relative path './alf_data'.  'dir.root' should be overridden to point to a specific folder.
+2022-02-11 14:06:54,485 INFO  [org.alfresco.repo.admin.ConfigurationChecker] [localhost-startStop-1] The root data directory ('dir.root') is: ./alf_data
+2022-02-11 14:06:54,592 INFO  [org.alfresco.repo.admin.patch.PatchExecuter] [localhost-startStop-1] Checking for patches to apply ...
+2022-02-11 14:06:55,757 INFO  [org.alfresco.repo.admin.patch.PatchExecuter] [localhost-startStop-1] No patches were required.
+2022-02-11 14:06:55,850 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Found 10 module package(s).
+2022-02-11 14:06:56,126 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'alfresco-aos-module' version 1.3.0.
+2022-02-11 14:06:56,180 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'ootbee-support-tools-repo' version 1.1.0.0.9999999999.
+2022-02-11 14:06:56,239 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'org.alfresco.integrations.google.docs' version 3.1.0.
+2022-02-11 14:06:56,287 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'de.fme.alfresco.JavascriptConsole-repo' version 0.7.2110071038.
+2022-02-11 14:06:56,324 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'simple-ocr-repo' version 2.3.1.
+2022-02-11 14:06:56,360 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'share-site-creators-repo' version 0.0.8-SNAPSHOT.
+2022-02-11 14:06:56,405 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'embed-metadata-action' version 1.0.0.
+2022-02-11 14:06:56,456 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'alfresco-share-services' version 6.2.0.
+2022-02-11 14:06:56,515 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'esign-cert-repo' version 1.8.2.
+2022-02-11 14:06:56,566 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'alfresco-trashcan-cleaner' version 2.3.
+2022-02-11 14:06:56,585 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'fileServers' subsystem, ID: [fileServers, default]
+2022-02-11 14:06:57,955 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'fileServers' subsystem, ID: [fileServers, default] complete
+2022-02-11 14:06:57,956 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'imap' subsystem, ID: [imap, default]
+2022-02-11 14:06:58,302 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'imap' subsystem, ID: [imap, default] complete
+2022-02-11 14:06:58,304 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'email' subsystem, ID: [email, outbound]
+2022-02-11 14:06:59,132 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'email' subsystem, ID: [email, outbound] complete
+2022-02-11 14:06:59,133 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'email' subsystem, ID: [email, inbound]
+2022-02-11 14:06:59,346 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'email' subsystem, ID: [email, inbound] complete
+2022-02-11 14:06:59,347 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Subscriptions' subsystem, ID: [Subscriptions, default]
+2022-02-11 14:06:59,419 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Subscriptions' subsystem, ID: [Subscriptions, default] complete
+2022-02-11 14:06:59,503 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Synchronization' subsystem, ID: [Synchronization, default]
+2022-02-11 14:06:59,662 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'sysAdmin' subsystem, ID: [sysAdmin, default]
+2022-02-11 14:06:59,718 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'sysAdmin' subsystem, ID: [sysAdmin, default] complete
+2022-02-11 14:07:00,013 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Synchronization' subsystem, ID: [Synchronization, default] complete
+2022-02-11 14:07:00,080 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Alfresco JVM - v11.0.1+13; maximum heap size 5952.000MB
+2022-02-11 14:07:00,081 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Server Mode :UNKNOWN
+2022-02-11 14:07:00,099 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Alfresco Content Services started (Community). Current version: 6.2.0 (rb65251d6-b368) schema 13,001. Originally installed version: 6.2.0 (rb65251d6-b368) schema 13,001.
+2022-02-11 14:07:00,132 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'ActivitiesFeed' subsystem, ID: [ActivitiesFeed, default]
+2022-02-11 14:07:01,237 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'ActivitiesFeed' subsystem, ID: [ActivitiesFeed, default] complete
+2022-02-11 14:07:01,239 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Replication' subsystem, ID: [Replication, default]
+2022-02-11 14:07:01,298 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Replication' subsystem, ID: [Replication, default] complete
+2022-02-11 14:07:05,778 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Messaging' subsystem, ID: [Messaging, default]
+2022-02-11 14:07:14,531 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Messaging' subsystem, ID: [Messaging, default] complete
+2022-02-11 14:07:14,543 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'googledocs' subsystem, ID: [googledocs, drive]
+2022-02-11 14:07:15,071 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'googledocs' subsystem, ID: [googledocs, drive] complete
+2022-02-11 14:07:37,115 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 443 Web Scripts (+0 failed), 596 URLs
+2022-02-11 14:07:37,153 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 1 Package Description Documents (+0 failed) 
+2022-02-11 14:07:37,155 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 14:07:49,224 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 443 Web Scripts (+0 failed), 596 URLs
+2022-02-11 14:07:49,225 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 1 Package Description Documents (+0 failed) 
+2022-02-11 14:07:49,226 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 14:07:49,251 INFO  [org.springframework.extensions.webscripts.AbstractRuntimeContainer] [localhost-startStop-1] Initialised Repository Web Script Container (in 33271.105ms)
+2022-02-11 14:07:49,332 INFO  [org.springframework.extensions.webscripts.TemplateProcessorRegistry] [localhost-startStop-1] Registered template processor freemarker for extension ftl
+2022-02-11 14:07:49,344 INFO  [org.springframework.extensions.webscripts.ScriptProcessorRegistry] [localhost-startStop-1] Registered script processor javascript for extension js
+2022-02-11 14:07:59,861 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 443 Web Scripts (+0 failed), 596 URLs
+2022-02-11 14:07:59,862 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 1 Package Description Documents (+0 failed) 
+2022-02-11 14:07:59,862 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 14:08:00,379 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 14 Web Scripts (+0 failed), 103 URLs
+2022-02-11 14:08:00,379 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Package Description Documents (+0 failed) 
+2022-02-11 14:08:00,379 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 14:08:00,635 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 14 Web Scripts (+0 failed), 103 URLs
+2022-02-11 14:08:00,635 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Package Description Documents (+0 failed) 
+2022-02-11 14:08:00,636 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 14:08:00,647 INFO  [org.springframework.extensions.webscripts.AbstractRuntimeContainer] [localhost-startStop-1] Initialised Public Api Web Script Container (in 11250.426ms)
+2022-02-11 14:08:00,760 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 14 Web Scripts (+0 failed), 103 URLs
+2022-02-11 14:08:00,761 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Package Description Documents (+0 failed) 
+2022-02-11 14:08:00,762 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 14:08:01,122 WARN  [org.alfresco.web.scripts.servlet.X509ServletFilterBase] [localhost-startStop-1] clientAuth does not appear to be set for Tomcat. clientAuth must be set to 'want' for X509 Authentication
+2022-02-11 14:08:01,123 WARN  [org.alfresco.web.scripts.servlet.X509ServletFilterBase] [localhost-startStop-1] Attempting to set clientAuth=want through JMX...
+2022-02-11 14:08:01,177 WARN  [org.alfresco.web.scripts.servlet.X509ServletFilterBase] [localhost-startStop-1] Unable to set clientAuth=want through JMX.
+2022-02-11 14:08:14,367 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-nio-8080-exec-1] Starting 'Search' subsystem, ID: [Search, managed, solr6]
+2022-02-11 14:08:17,787 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-nio-8080-exec-1] Startup of 'Search' subsystem, ID: [Search, managed, solr6] complete
+2022-02-11 15:09:02,145 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'googledocs' subsystem, ID: [googledocs, drive]
+2022-02-11 15:09:02,149 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'googledocs' subsystem, ID: [googledocs, drive]
+2022-02-11 15:09:02,152 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'Messaging' subsystem, ID: [Messaging, default]
+2022-02-11 15:09:02,366 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'Messaging' subsystem, ID: [Messaging, default]
+2022-02-11 15:09:02,376 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'Replication' subsystem, ID: [Replication, default]
+2022-02-11 15:09:02,377 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'Replication' subsystem, ID: [Replication, default]
+2022-02-11 15:09:02,388 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'Subscriptions' subsystem, ID: [Subscriptions, default]
+2022-02-11 15:09:02,389 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'Subscriptions' subsystem, ID: [Subscriptions, default]
+2022-02-11 15:09:02,389 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'email' subsystem, ID: [email, inbound]
+2022-02-11 15:09:02,390 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'email' subsystem, ID: [email, inbound]
+2022-02-11 15:09:02,390 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'fileServers' subsystem, ID: [fileServers, default]
+2022-02-11 15:09:02,396 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'fileServers' subsystem, ID: [fileServers, default]
+2022-02-11 15:09:02,426 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'ActivitiesFeed' subsystem, ID: [ActivitiesFeed, default]
+2022-02-11 15:09:02,430 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'ActivitiesFeed' subsystem, ID: [ActivitiesFeed, default]
+2022-02-11 15:09:02,432 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'OOoJodconverter' subsystem, ID: [OOoJodconverter, default]
+2022-02-11 15:09:02,434 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'OOoJodconverter' subsystem, ID: [OOoJodconverter, default]
+2022-02-11 15:09:02,435 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'ContentStore' subsystem, ID: [ContentStore, managed, unencrypted]
+2022-02-11 15:09:02,435 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'ContentStore' subsystem, ID: [ContentStore, managed, unencrypted]
+2022-02-11 15:09:02,439 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'Synchronization' subsystem, ID: [Synchronization, default]
+2022-02-11 15:09:02,441 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'Synchronization' subsystem, ID: [Synchronization, default]
+2022-02-11 15:09:02,442 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'email' subsystem, ID: [email, outbound]
+2022-02-11 15:09:02,444 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'email' subsystem, ID: [email, outbound]
+2022-02-11 15:09:02,447 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'imap' subsystem, ID: [imap, default]
+2022-02-11 15:09:02,450 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'imap' subsystem, ID: [imap, default]
+2022-02-11 15:09:02,678 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'Search' subsystem, ID: [Search, managed, solr6]
+2022-02-11 15:09:02,909 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'Search' subsystem, ID: [Search, managed, solr6]
+2022-02-11 15:09:02,994 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'thirdparty' subsystem, ID: [thirdparty, default]
+2022-02-11 15:09:02,995 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'thirdparty' subsystem, ID: [thirdparty, default]
+2022-02-11 15:09:02,998 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'Authentication' subsystem, ID: [Authentication, managed, alfrescoNtlm1]
+2022-02-11 15:09:02,998 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'Authentication' subsystem, ID: [Authentication, managed, alfrescoNtlm1]
+2022-02-11 15:09:02,999 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'sysAdmin' subsystem, ID: [sysAdmin, default]
+2022-02-11 15:09:02,999 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'sysAdmin' subsystem, ID: [sysAdmin, default]
+2022-02-11 15:44:41,232 WARN  [org.alfresco.heartbeat.datasender.HBDataSenderServiceBuilder] [localhost-startStop-1] Setting the Heartbeat sender cron with property 'heartbeat.sender.cronExpression' is no longer supported.
+2022-02-11 15:44:41,433 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V4.2-metadata-query-indexes
+2022-02-11 15:44:41,434 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V5.1-metadata-query-indexes
+2022-02-11 15:44:41,434 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V5.2-remove-jbpm-tables-from-db
+2022-02-11 15:44:41,697 INFO  [org.alfresco.repo.admin] [localhost-startStop-1] Using database URL 'jdbc:postgresql://postgres:5432/alfresco' with user 'alfresco'.
+2022-02-11 15:44:41,697 INFO  [org.alfresco.repo.admin] [localhost-startStop-1] Connected to database PostgreSQL version 11.4 (Debian 11.4-1.pgdg90+1)
+2022-02-11 15:44:47,475 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Authentication' subsystem, ID: [Authentication, managed, alfrescoNtlm1]
+2022-02-11 15:44:47,538 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Authentication' subsystem, ID: [Authentication, managed, alfrescoNtlm1] complete
+2022-02-11 15:44:49,013 INFO  [org.orderofthebee.addons.support.tools.repo.config.PropertyBackedBeanPersister] [localhost-startStop-1] OOTBee Support Tools - PropertyBackedBeanPersister enabled
+2022-02-11 15:44:49,674 INFO  [org.springframework.extensions.webscripts.TemplateProcessorRegistry] [localhost-startStop-1] Registered template processor Repository Template Processor for extension ftl
+2022-02-11 15:44:49,678 INFO  [org.springframework.extensions.webscripts.ScriptProcessorRegistry] [localhost-startStop-1] Registered script processor Repository Script Processor for extension js
+2022-02-11 15:44:53,329 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'ContentStore' subsystem, ID: [ContentStore, managed, unencrypted]
+2022-02-11 15:44:53,422 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'ContentStore' subsystem, ID: [ContentStore, managed, unencrypted] complete
+2022-02-11 15:44:53,488 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Connecting to database: jdbc:postgresql://postgres:5432/alfresco, UserName=alfresco, PostgreSQL JDBC Driver
+2022-02-11 15:44:53,488 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Schema managed by database dialect org.alfresco.repo.domain.dialect.PostgreSQLDialect.
+2022-02-11 15:44:53,571 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Applied patches detected: 224
+2022-02-11 15:44:53,629 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Checking and patching Alfresco tables took 58 ms
+2022-02-11 15:44:53,636 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Activiti tables need to be checked for patches
+2022-02-11 15:44:53,675 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Checking and patching Activiti tables took 38 ms
+2022-02-11 15:44:53,720 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Checking that all patches have been applied took 45 ms
+2022-02-11 15:44:53,720 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Updating the DB schema took 228 ms
+2022-02-11 15:44:53,722 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] No changes were made to the schema.
+2022-02-11 15:44:55,046 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'thirdparty' subsystem, ID: [thirdparty, default]
+2022-02-11 15:44:55,171 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'thirdparty' subsystem, ID: [thirdparty, default] complete
+2022-02-11 15:44:55,171 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'OOoJodconverter' subsystem, ID: [OOoJodconverter, default]
+2022-02-11 15:44:55,295 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'OOoJodconverter' subsystem, ID: [OOoJodconverter, default] complete
+2022-02-11 15:44:55,299 WARN  [org.alfresco.repo.admin.ConfigurationChecker] [localhost-startStop-1] The 'dir.root' property is set to a relative path './alf_data'.  'dir.root' should be overridden to point to a specific folder.
+2022-02-11 15:44:55,300 INFO  [org.alfresco.repo.admin.ConfigurationChecker] [localhost-startStop-1] The root data directory ('dir.root') is: ./alf_data
+2022-02-11 15:44:55,342 INFO  [org.alfresco.repo.admin.patch.PatchExecuter] [localhost-startStop-1] Checking for patches to apply ...
+2022-02-11 15:44:55,738 INFO  [org.alfresco.repo.admin.patch.PatchExecuter] [localhost-startStop-1] No patches were required.
+2022-02-11 15:44:55,786 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Found 10 module package(s).
+2022-02-11 15:44:55,875 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'alfresco-aos-module' version 1.3.0.
+2022-02-11 15:44:55,896 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'ootbee-support-tools-repo' version 1.1.0.0.9999999999.
+2022-02-11 15:44:55,921 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'org.alfresco.integrations.google.docs' version 3.1.0.
+2022-02-11 15:44:55,940 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'de.fme.alfresco.JavascriptConsole-repo' version 0.7.2110071038.
+2022-02-11 15:44:55,962 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'simple-ocr-repo' version 2.3.1.
+2022-02-11 15:44:55,982 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'share-site-creators-repo' version 0.0.8-SNAPSHOT.
+2022-02-11 15:44:56,001 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'embed-metadata-action' version 1.0.0.
+2022-02-11 15:44:56,017 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'alfresco-share-services' version 6.2.0.
+2022-02-11 15:44:56,035 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'esign-cert-repo' version 1.8.2.
+2022-02-11 15:44:56,051 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'alfresco-trashcan-cleaner' version 2.3.
+2022-02-11 15:44:56,061 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'fileServers' subsystem, ID: [fileServers, default]
+2022-02-11 15:44:56,815 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'fileServers' subsystem, ID: [fileServers, default] complete
+2022-02-11 15:44:56,816 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'imap' subsystem, ID: [imap, default]
+2022-02-11 15:44:56,995 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'imap' subsystem, ID: [imap, default] complete
+2022-02-11 15:44:56,995 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'email' subsystem, ID: [email, outbound]
+2022-02-11 15:44:57,502 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'email' subsystem, ID: [email, outbound] complete
+2022-02-11 15:44:57,503 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'email' subsystem, ID: [email, inbound]
+2022-02-11 15:44:57,674 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'email' subsystem, ID: [email, inbound] complete
+2022-02-11 15:44:57,675 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Subscriptions' subsystem, ID: [Subscriptions, default]
+2022-02-11 15:44:57,728 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Subscriptions' subsystem, ID: [Subscriptions, default] complete
+2022-02-11 15:44:57,765 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Synchronization' subsystem, ID: [Synchronization, default]
+2022-02-11 15:44:57,907 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'sysAdmin' subsystem, ID: [sysAdmin, default]
+2022-02-11 15:44:57,955 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'sysAdmin' subsystem, ID: [sysAdmin, default] complete
+2022-02-11 15:44:58,071 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Synchronization' subsystem, ID: [Synchronization, default] complete
+2022-02-11 15:44:58,110 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Alfresco JVM - v11.0.1+13; maximum heap size 5952.000MB
+2022-02-11 15:44:58,110 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Server Mode :UNKNOWN
+2022-02-11 15:44:58,122 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Alfresco Content Services started (Community). Current version: 6.2.0 (rb65251d6-b368) schema 13,001. Originally installed version: 6.2.0 (rb65251d6-b368) schema 13,001.
+2022-02-11 15:44:58,147 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'ActivitiesFeed' subsystem, ID: [ActivitiesFeed, default]
+2022-02-11 15:44:58,690 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'ActivitiesFeed' subsystem, ID: [ActivitiesFeed, default] complete
+2022-02-11 15:44:58,691 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Replication' subsystem, ID: [Replication, default]
+2022-02-11 15:44:58,728 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Replication' subsystem, ID: [Replication, default] complete
+2022-02-11 15:45:00,395 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Messaging' subsystem, ID: [Messaging, default]
+2022-02-11 15:45:03,678 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Messaging' subsystem, ID: [Messaging, default] complete
+2022-02-11 15:45:03,681 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'googledocs' subsystem, ID: [googledocs, drive]
+2022-02-11 15:45:03,914 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'googledocs' subsystem, ID: [googledocs, drive] complete
+2022-02-11 15:45:09,517 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 443 Web Scripts (+0 failed), 596 URLs
+2022-02-11 15:45:09,533 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 1 Package Description Documents (+0 failed) 
+2022-02-11 15:45:09,534 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 15:45:10,496 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 443 Web Scripts (+0 failed), 596 URLs
+2022-02-11 15:45:10,496 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 1 Package Description Documents (+0 failed) 
+2022-02-11 15:45:10,496 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 15:45:10,502 INFO  [org.springframework.extensions.webscripts.AbstractRuntimeContainer] [localhost-startStop-1] Initialised Repository Web Script Container (in 6112.72ms)
+2022-02-11 15:45:10,526 INFO  [org.springframework.extensions.webscripts.TemplateProcessorRegistry] [localhost-startStop-1] Registered template processor freemarker for extension ftl
+2022-02-11 15:45:10,529 INFO  [org.springframework.extensions.webscripts.ScriptProcessorRegistry] [localhost-startStop-1] Registered script processor javascript for extension js
+2022-02-11 15:45:11,507 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 443 Web Scripts (+0 failed), 596 URLs
+2022-02-11 15:45:11,508 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 1 Package Description Documents (+0 failed) 
+2022-02-11 15:45:11,508 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 15:45:11,617 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 14 Web Scripts (+0 failed), 103 URLs
+2022-02-11 15:45:11,617 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Package Description Documents (+0 failed) 
+2022-02-11 15:45:11,617 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 15:45:11,698 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 14 Web Scripts (+0 failed), 103 URLs
+2022-02-11 15:45:11,699 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Package Description Documents (+0 failed) 
+2022-02-11 15:45:11,699 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 15:45:11,702 INFO  [org.springframework.extensions.webscripts.AbstractRuntimeContainer] [localhost-startStop-1] Initialised Public Api Web Script Container (in 1156.785ms)
+2022-02-11 15:45:11,728 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 14 Web Scripts (+0 failed), 103 URLs
+2022-02-11 15:45:11,728 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Package Description Documents (+0 failed) 
+2022-02-11 15:45:11,728 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2022-02-11 15:45:11,802 WARN  [org.alfresco.web.scripts.servlet.X509ServletFilterBase] [localhost-startStop-1] clientAuth does not appear to be set for Tomcat. clientAuth must be set to 'want' for X509 Authentication
+2022-02-11 15:45:11,802 WARN  [org.alfresco.web.scripts.servlet.X509ServletFilterBase] [localhost-startStop-1] Attempting to set clientAuth=want through JMX...
+2022-02-11 15:45:11,814 WARN  [org.alfresco.web.scripts.servlet.X509ServletFilterBase] [localhost-startStop-1] Unable to set clientAuth=want through JMX.
+2022-02-11 15:45:14,811 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-nio-8080-exec-1] Starting 'Search' subsystem, ID: [Search, managed, solr6]
+2022-02-11 15:45:15,109 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-nio-8080-exec-1] Startup of 'Search' subsystem, ID: [Search, managed, solr6] complete
+2022-02-11 16:43:13,422 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'googledocs' subsystem, ID: [googledocs, drive]
+2022-02-11 16:43:13,426 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopped 'googledocs' subsystem, ID: [googledocs, drive]
+2022-02-11 16:43:13,431 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-2] Stopping 'Messaging' subsystem, ID: [Messaging, default]

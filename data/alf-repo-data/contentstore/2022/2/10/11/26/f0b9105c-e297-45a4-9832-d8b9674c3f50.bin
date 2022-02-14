@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+   <name>Slingshot Project</name>
+   <description>Slingshot Project</description>
+   <source-id>site</source-id>
+   <properties>
+      <theme>lightTheme</theme>
+      <root-page>site-index</root-page>
+   <name>Slingshot Project</name><logo>workspace://SpacesStore/0aa5cd9f-408c-4605-a913-486b10bd9d47</logo></properties>
+</configuration>

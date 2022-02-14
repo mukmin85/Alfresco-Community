@@ -1,0 +1,101 @@
+10-Feb-2022 07:59:53.205 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version:        Apache Tomcat/8.5.43
+10-Feb-2022 07:59:53.280 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jul 4 2019 20:53:15 UTC
+10-Feb-2022 07:59:53.280 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server number:         8.5.43.0
+10-Feb-2022 07:59:53.281 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
+10-Feb-2022 07:59:53.281 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            5.4.0-99-generic
+10-Feb-2022 07:59:53.282 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+10-Feb-2022 07:59:53.282 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /usr/java/jdk-11.0.1
+10-Feb-2022 07:59:53.283 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           11.0.1+13
+10-Feb-2022 07:59:53.283 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+10-Feb-2022 07:59:53.284 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /usr/local/tomcat
+10-Feb-2022 07:59:53.284 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /usr/local/tomcat
+10-Feb-2022 07:59:53.289 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+10-Feb-2022 07:59:53.290 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+10-Feb-2022 07:59:53.307 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+10-Feb-2022 07:59:53.308 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties
+10-Feb-2022 07:59:53.324 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+10-Feb-2022 07:59:53.324 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Ddb.username=alfresco
+10-Feb-2022 07:59:53.325 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Ddb.password=alfresco
+10-Feb-2022 07:59:53.325 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Ddb.driver=org.postgresql.Driver
+10-Feb-2022 07:59:53.326 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
+10-Feb-2022 07:59:53.326 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dalfresco_user_store.adminpassword=209c6174da490caeb422f3fa5a7ae634
+10-Feb-2022 07:59:53.330 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dsystem.preferred.password.encoding=bcrypt10
+10-Feb-2022 07:59:53.331 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dsolr.host=solr6
+10-Feb-2022 07:59:53.337 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dsolr.port=8983
+10-Feb-2022 07:59:53.338 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dsolr.secureComms=none
+10-Feb-2022 07:59:53.339 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dsolr.baseUrl=/solr
+10-Feb-2022 07:59:53.339 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dindex.subsystem.name=solr6
+10-Feb-2022 07:59:53.340 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dalfresco.host=share.niise.gov.my
+10-Feb-2022 07:59:53.340 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dalfresco.port=443
+10-Feb-2022 07:59:53.340 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dalfresco.protocol=https
+10-Feb-2022 07:59:53.341 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dshare.host=share.niise.gov.my
+10-Feb-2022 07:59:53.341 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dshare.port=443
+10-Feb-2022 07:59:53.341 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dshare.protocol=https
+10-Feb-2022 07:59:53.341 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Daos.baseUrlOverwrite=https://share.niise.gov.my/alfresco/aos
+10-Feb-2022 07:59:53.342 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dmessaging.broker.url=failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true
+10-Feb-2022 07:59:53.343 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Ddeployment.method=DOCKER_COMPOSE
+10-Feb-2022 07:59:53.343 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcsrf.filter.enabled=false
+10-Feb-2022 07:59:53.343 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dopencmis.server.override=true
+10-Feb-2022 07:59:53.344 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dopencmis.server.value=https://share.niise.gov.my:443
+10-Feb-2022 07:59:53.345 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dlocal.transform.service.enabled=true
+10-Feb-2022 07:59:53.370 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -DlocalTransform.pdfrenderer.url=http://alfresco-pdf-renderer:8090/
+10-Feb-2022 07:59:53.394 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -DlocalTransform.imagemagick.url=http://imagemagick:8090/
+10-Feb-2022 07:59:53.398 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -DlocalTransform.libreoffice.url=http://libreoffice:8090/
+10-Feb-2022 07:59:53.398 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -DlocalTransform.tika.url=http://tika:8090/
+10-Feb-2022 07:59:53.399 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -DlocalTransform.misc.url=http://transform-misc:8090/
+10-Feb-2022 07:59:53.399 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dlegacy.transform.service.enabled=true
+10-Feb-2022 07:59:53.400 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dalfresco-pdf-renderer.url=http://alfresco-pdf-renderer:8090/
+10-Feb-2022 07:59:53.400 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djodconverter.url=http://libreoffice:8090/
+10-Feb-2022 07:59:53.401 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dimg.url=http://imagemagick:8090/
+10-Feb-2022 07:59:53.401 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dtika.url=http://tika:8090/
+10-Feb-2022 07:59:53.401 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dtransform.misc.url=http://transform-misc:8090/
+10-Feb-2022 07:59:53.402 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcsrf.filter.enabled=false
+10-Feb-2022 07:59:53.402 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dalfresco.restApi.basicAuthScheme=true
+10-Feb-2022 07:59:53.402 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dauthentication.protection.enabled=false
+10-Feb-2022 07:59:53.402 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -XX:+UseG1GC
+10-Feb-2022 07:59:53.403 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -XX:+UseStringDeduplication
+10-Feb-2022 07:59:53.403 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Xms5952m
+10-Feb-2022 07:59:53.403 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Xmx5952m
+10-Feb-2022 07:59:53.404 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Docr.command=/opt/alfresco/bin/ocrmypdf.sh
+10-Feb-2022 07:59:53.419 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Docr.output.verbose=true
+10-Feb-2022 07:59:53.419 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Docr.output.file.prefix.command=
+10-Feb-2022 07:59:53.419 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Docr.extra.commands=-j1 --author keensoft --rotate-pages -l spa+eng+fra --deskew --clean --skip-text
+10-Feb-2022 07:59:53.420 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Docr.server.os=linux
+10-Feb-2022 07:59:53.426 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+10-Feb-2022 07:59:53.427 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+10-Feb-2022 07:59:53.427 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+10-Feb-2022 07:59:53.429 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+10-Feb-2022 07:59:53.431 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.security.manager
+10-Feb-2022 07:59:53.434 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.security.policy==/usr/local/tomcat/conf/catalina.policy
+10-Feb-2022 07:59:53.435 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/usr/local/tomcat
+10-Feb-2022 07:59:53.435 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/usr/local/tomcat
+10-Feb-2022 07:59:53.435 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/usr/local/tomcat/temp
+10-Feb-2022 07:59:53.436 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.23] using APR version [1.4.8].
+10-Feb-2022 07:59:53.436 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+10-Feb-2022 07:59:53.436 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+10-Feb-2022 07:59:53.475 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.0.2k-fips  26 Jan 2017]
+10-Feb-2022 07:59:54.014 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+10-Feb-2022 07:59:54.133 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+10-Feb-2022 07:59:54.192 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+10-Feb-2022 07:59:54.211 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+10-Feb-2022 07:59:54.220 INFO [main] org.apache.catalina.startup.Catalina.load Initialization processed in 3728 ms
+10-Feb-2022 07:59:54.586 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+10-Feb-2022 07:59:54.587 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/8.5.43
+10-Feb-2022 07:59:54.811 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [/usr/local/tomcat/webapps/api-explorer.war]
+10-Feb-2022 07:59:58.290 INFO [localhost-startStop-1] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+10-Feb-2022 07:59:58.538 WARNING [localhost-startStop-1] org.apache.catalina.util.SessionIdGeneratorBase.createSecureRandom Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [134] milliseconds.
+10-Feb-2022 08:00:02.305 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/usr/local/tomcat/webapps/api-explorer.war] has finished in [7,493] ms
+10-Feb-2022 08:00:02.321 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/usr/local/tomcat/webapps/alfresco]
+10-Feb-2022 08:00:04.839 WARNING [localhost-startStop-1] org.apache.juli.ClassLoaderLogManager.readConfiguration Reading /usr/local/tomcat/webapps/alfresco/WEB-INF/classes/logging.properties is not permitted. See "per context logging" in the default catalina.policy file.
+10-Feb-2022 08:00:30.249 INFO [localhost-startStop-1] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+10-Feb-2022 08:01:31.834 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/usr/local/tomcat/webapps/alfresco] has finished in [89,513] ms
+10-Feb-2022 08:01:31.834 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/usr/local/tomcat/webapps/ROOT]
+10-Feb-2022 08:01:31.839 WARNING [localhost-startStop-1] org.apache.catalina.startup.SetContextPropertiesRule.begin [SetContextPropertiesRule]{Context} Setting property 'debug' to '100' did not find a matching property.
+10-Feb-2022 08:01:31.908 INFO [localhost-startStop-1] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+10-Feb-2022 08:01:31.912 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/usr/local/tomcat/webapps/ROOT] has finished in [77] ms
+10-Feb-2022 08:01:31.912 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/usr/local/tomcat/webapps/_vti_bin]
+10-Feb-2022 08:01:32.016 INFO [localhost-startStop-1] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+10-Feb-2022 08:01:32.020 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/usr/local/tomcat/webapps/_vti_bin] has finished in [108] ms
+10-Feb-2022 08:01:32.034 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+10-Feb-2022 08:01:32.052 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+10-Feb-2022 08:01:32.075 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 97855 ms
