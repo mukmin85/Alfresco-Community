@@ -199,19 +199,6 @@ root@share:~# docker pull jbarlow83/ocrmypdf:latest
 root@share:~# cd /share/
 
 root@share:/share# docker-compose up --build --force-recreate -d
-Creating share_tika_1                  ... done
-Creating share_solr6_1                 ... done
-Creating share_activemq_1              ... done
-Creating share_postgres_1              ... done
-Creating share_alfresco-pdf-renderer_1 ... done
-Creating share_share_1                 ... done
-Creating share_transform-misc_1        ... done
-Creating share_libreoffice_1           ... done
-Creating share_ocrmypdf_1              ... done
-Creating share_imagemagick_1           ... done
-Creating share_alfresco_1              ... done
-Creating share_content-app_1           ... done
-Creating share_proxy_1                 ... done
 
 root@share:~# docker container ls -a
 
