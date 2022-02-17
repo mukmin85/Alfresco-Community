@@ -26,7 +26,7 @@ root@share:~# netplan try
 
 root@share:~# netplan apply
 
-admins@alfresco:~$ cat /etc/hosts
+root@share:~# cat /etc/hosts
 
 root@share:~# hostnamectl set-hostname share.com.my --static
 
