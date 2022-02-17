@@ -74,7 +74,7 @@ root@share:~# npm install n -g
 
 root@share:~# n stable
 
-admins@alfresco:~$ hash -r
+root@share:~# hash -r
 
 root@share:~# npm install -g yo
 
